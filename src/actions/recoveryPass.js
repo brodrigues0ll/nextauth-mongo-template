@@ -3,19 +3,20 @@
 import nodemailer from "nodemailer";
 import connect from "@/lib/db";
 import User from "@/models/User";
+import bcrypt from "bcryptjs";
 
 export const sendRecoveryCode = async (email) => {
   await connect();
-  // Verificar se o usuário existe
+  // Verificar se o email já está cadastrado
   const user = await User.findOne({ email }).where("email").equals(email);
   if (!user) {
-    throw new Error("Usuário não encontrado.");
+    throw new Error("Email nao cadastrado!");
   }
 
   // Gerar um código aleatório de 6 dígitos
   const code = Math.floor(100000 + Math.random() * 900000);
 
-  // Salvar o código no banco de dados
+  // Salva o código no banco de dados
   await user.updateOne({
     recoveryCode: code,
     recoveryCodeExpires: Date.now() + 3 * 60 * 1000, // 3 minutos de expiração
@@ -30,8 +31,8 @@ export const sendRecoveryCode = async (email) => {
     },
   });
 
-  // Enviar o email
-  const info = await transporter.sendMail({
+  // Email a ser enviado
+  await transporter.sendMail({
     from: '"Next Auth Template" <sullivan9909@gmail.com>',
     to: email,
     subject: "Recuperação de Senha - Código de Verificação",
@@ -49,5 +50,35 @@ export const sendRecoveryCode = async (email) => {
           </div>
         </div>
     `,
+  });
+};
+
+// _______________________________________________________________________________
+
+export const verifyRecoveryCode = async (email, code) => {
+  await connect();
+
+  const recoveryRecord = await User.findOne({ recoveryCode: code })
+    .where("email")
+    .equals(email);
+  if (!recoveryRecord) {
+    throw new Error("Código de recuperação inválido!");
+  }
+};
+
+// _______________________________________________________________________________
+
+export const resetPassword = async (email, code, newPassword) => {
+  await connect();
+
+  const recoveryRecord = await User.findOne({ recoveryCode: code })
+    .where("email")
+    .equals(email);
+  if (!recoveryRecord) {
+    throw new Error("Código de recuperação inválido!");
+  }
+
+  await recoveryRecord.updateOne({
+    password: await bcrypt.hash(newPassword, 12),
   });
 };
