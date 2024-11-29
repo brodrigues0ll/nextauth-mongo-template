@@ -85,7 +85,7 @@ export default function Home() {
               />
               <span
                 className="-mt-4 w-full text-right text-zinc-400 text-sm cursor-pointer hover:underline"
-                onClick={() => router.push("/resetpass")}
+                onClick={() => router.push("/resetpassword")}
               >
                 Esqueci minha senha.
               </span>

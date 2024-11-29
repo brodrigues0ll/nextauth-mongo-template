@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { sendRecoveryCode } from "@/actions/recoveryPass";
 
 const RecoveryPassPage = () => {
   const [email, setEmail] = useState("");
@@ -10,25 +11,11 @@ const RecoveryPassPage = () => {
 
   const handleSendCode = async () => {
     try {
-      const response = await fetch("/api/send-recovery-code", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        toast.success("Código enviado com sucesso! Verifique seu e-mail.");
-        setSentCode(true);
-      } else {
-        toast.error(data.error || "Erro ao enviar o código.");
-      }
+      await sendRecoveryCode(email);
+      toast.success("Código enviado com sucesso! Verifique seu e-mail.");
+      setSentCode(true);
     } catch (error) {
-      toast.error("Erro ao enviar o código.");
-      console.error(error);
+      toast.error(error.message);
     }
   };
 
