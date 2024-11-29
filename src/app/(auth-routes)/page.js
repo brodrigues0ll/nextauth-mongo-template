@@ -83,6 +83,12 @@ export default function Home() {
                   setLoginForm({ ...loginForm, password: e.target.value })
                 }
               />
+              <span
+                className="-mt-4 w-full text-right text-zinc-400 text-sm cursor-pointer hover:underline"
+                onClick={() => router.push("/resetpass")}
+              >
+                Esqueci minha senha.
+              </span>
 
               <button
                 className="bg-blue-400 rounded-lg p-2 flex justify-center items-center"
