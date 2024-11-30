@@ -36,17 +36,28 @@ export const sendRecoveryCode = async (email) => {
     from: '"Next Auth Template" <your-email@gmail.com>',
     to: email,
     subject: "Recuperação de Senha - Código de Verificação",
-    html: `
+    html: `             
     <div style="background-color: #ffffff; height: 100vh; display: flex; flex-direction: column; color: #000000; align-items: center; justify-content: center;">
           <div style="display: flex; flex-direction: column; border: 2px solid #d1d5db; border-radius: 0.5rem; padding: 1.25rem 2.5rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);">
+           <div style="text-align: center; padding: 40px 25px; background-color: #007bff; color: #ffffff; font-size: 24px; font-weight: bold;">
+            Next Auth Template - Recuperação de Senha
+          </div>
             <div style="display: flex; flex-direction: column;">
-              <h1 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">
+              <h1 style="text-align: center; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">
                 Olá, aqui está o seu código de recuperação.
               </h1>
               <p style="color: #2563eb; font-weight: 700; font-size: 1.5rem; text-align: center; margin-top: 2.5rem;">
                 ${code}
-              </p>
+              </p>              
             </div>
+                      <!-- Footer -->
+          <div style="text-align: center; font-size: 12px; color: #999999; padding: 20px 0;">
+            <p>&copy; ${new Date().getFullYear()} Your-Brand-Name. All rights reserved.</p>
+            <p>
+              If you have any questions, feel free to 
+              <a href="mailto:support@yourapp.com" style="color: #007bff; text-decoration: none;">contact us</a>.
+            </p>
+          </div>
           </div>
         </div>
     `,
