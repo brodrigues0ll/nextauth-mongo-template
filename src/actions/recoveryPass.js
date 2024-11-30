@@ -14,7 +14,7 @@ export const sendRecoveryCode = async (email) => {
   }
 
   // Gerar um código aleatório de 6 dígitos
-  const code = Math.floor(100000 + Math.random() * 900000);
+  const code = Math.floor(100000 + Math.random() * 999999);
 
   // Salva o código no banco de dados
   await user.updateOne({
@@ -33,7 +33,7 @@ export const sendRecoveryCode = async (email) => {
 
   // Email a ser enviado
   await transporter.sendMail({
-    from: '"Next Auth Template" <sullivan9909@gmail.com>',
+    from: '"Next Auth Template" <your-email@gmail.com>',
     to: email,
     subject: "Recuperação de Senha - Código de Verificação",
     html: `
