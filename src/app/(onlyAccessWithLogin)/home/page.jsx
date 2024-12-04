@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const [user, setUser] = useState(null);
@@ -12,6 +13,17 @@ const page = () => {
     };
     getUser();
   }, []);
+
+  const router = useRouter();
+
+  const logOff = () => {
+    signOut({
+      redirect: false,
+    });
+    setTimeout(() => {
+      router.push("/");
+    }, 50);
+  };
 
   if (!user) return null;
   return (
@@ -25,7 +37,7 @@ const page = () => {
       </div>
       <button
         className="bg-blue-400 rounded-lg px-5 py-2 flex justify-center items-center"
-        onClick={() => signOut()}
+        onClick={logOff}
       >
         Logout
       </button>
