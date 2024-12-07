@@ -15,6 +15,14 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  recoveryCode: {
+    type: String,
+    default: null,
+  },
+  recoveryCodeExpires: {
+    type: String,
+    default: null,
+  },
   password: {
     type: String,
     required: true,

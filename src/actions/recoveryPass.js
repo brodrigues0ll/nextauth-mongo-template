@@ -20,6 +20,7 @@ export const sendRecoveryCode = async (email) => {
   await user.updateOne({
     recoveryCode: code,
     recoveryCodeExpires: Date.now() + 3 * 60 * 1000, // 3 minutos de expiração
+    
   });
 
   // Configurar o transporte de email (substitua com suas credenciais de e-mail)

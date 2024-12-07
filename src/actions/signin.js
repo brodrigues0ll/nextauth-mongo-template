@@ -121,6 +121,7 @@ export const addUser = async (user) => {
     name,
     surname,
     email,
+
     password: await bcrypt.hash(password, 12),
   });
 
